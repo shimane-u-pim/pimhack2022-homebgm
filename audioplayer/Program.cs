@@ -4,16 +4,16 @@ using NAudio.Wave;
 
 namespace AudioPlayerHost
 {
-    class Program
+    public class Program
     {
-        const string AUDIO1 = @"";
-        const string AUDIO2 = @"";
-
         const double AUDIO_TIMING = 45;
+
+        const string AUDIO1 = @"audios/audio1.flac";
+        const string AUDIO2 = @"audios/audio2.flac";
 
         static void Main(string[] args)
         {
-            string audioFile = AUDIO2;
+            string audioFile = AUDIO1;
 
             using (AudioPlayUnit apu1 = new(0))
             using (AudioPlayUnit apu2 = new(1))
