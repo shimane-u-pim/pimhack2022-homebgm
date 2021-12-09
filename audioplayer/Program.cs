@@ -15,16 +15,17 @@ namespace AudioPlayerHost
         {
             string audioFile = AUDIO1;
 
-            using (AudioPlayUnit apu1 = new(0))
-            using (AudioPlayUnit apu2 = new(1))
+            var outputs = new Dictionary<string, int> {
+                { "Main", 0 },
+                { "Sub", 1 },
+            };
+
+            using (AudioPlayer ap = new(outputs))
             {
             LoadAudio:
-                apu1.LoadFile(audioFile);
-                apu2.LoadFile(audioFile);
-                apu2.CurrentTime.Add(TimeSpan.FromMilliseconds(AUDIO_TIMING));
+                ap.LoadFile(audioFile, AUDIO_TIMING);
 
-                apu1.Play();
-                apu2.Play();
+                ap.Play();
 
                 for (; ; )
                 {
@@ -36,19 +37,19 @@ namespace AudioPlayerHost
                             break;
 
                         case '1':
-                            apu1.Volume = 0;
+                            ap.SetVolume(outputs.Keys.ToArray()[0], 0);
                             break;
 
                         case '2':
-                            apu1.Volume = 1;
+                            ap.SetVolume(outputs.Keys.ToArray()[0], 1);
                             break;
 
                         case '3':
-                            apu2.Volume = 0;
+                            ap.SetVolume(outputs.Keys.ToArray()[1], 0);
                             break;
 
                         case '4':
-                            apu2.Volume = 1;
+                            ap.SetVolume(outputs.Keys.ToArray()[1], 1);
                             break;
 
                         case 'a':
