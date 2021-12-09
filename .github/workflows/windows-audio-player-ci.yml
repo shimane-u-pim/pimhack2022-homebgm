@@ -1,0 +1,24 @@
+name: windows-audio-player CI
+
+on:
+  push:
+    branches: [ windows-audio-player ]
+  pull_request:
+    branches: [ windows-audio-player ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet audioplayer/audioplayer.csproj restore
+    - name: Build
+      run: dotnet build audioplayer/audioplayer.csproj --no-restore
