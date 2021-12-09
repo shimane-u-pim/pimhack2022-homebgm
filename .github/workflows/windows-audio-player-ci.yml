@@ -2,9 +2,9 @@ name: windows-audio-player CI
 
 on:
   push:
-    branches: [ windows-audio-player ]
+    branches: [ master, windows-audio-player ]
   pull_request:
-    branches: [ windows-audio-player ]
+    branches: [ master, windows-audio-player ]
   workflow_dispatch:
 
 jobs:
