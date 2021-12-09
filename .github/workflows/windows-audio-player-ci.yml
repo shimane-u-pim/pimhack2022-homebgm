@@ -19,6 +19,6 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet audioplayer/audioplayer.csproj restore
+      run: dotnet restore audioplayer/audioplayer.csproj
     - name: Build
       run: dotnet build audioplayer/audioplayer.csproj --no-restore
