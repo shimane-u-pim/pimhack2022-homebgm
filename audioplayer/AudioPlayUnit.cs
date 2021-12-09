@@ -11,7 +11,7 @@ namespace AudioPlayerHost
     {
         private WaveOut waveOut;
 
-        private AudioFileReader reader = null;
+        private AudioFileReader? reader = null;
 
         public AudioPlayUnit(int deviceId)
         {
@@ -47,9 +47,9 @@ namespace AudioPlayerHost
                 reader.Dispose();
         }
 
-        public long Position { get => reader.Position; }
+        public long Position { get => reader == null ? 0 : reader.Position; }
 
-        public TimeSpan CurrentTime { get => reader.CurrentTime; }
+        public TimeSpan CurrentTime { get => reader == null ? TimeSpan.Zero : reader.CurrentTime; }
 
         public PlaybackState PlaybackState { get => waveOut.PlaybackState; }
 
