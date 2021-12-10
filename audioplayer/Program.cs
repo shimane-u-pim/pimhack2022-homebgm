@@ -11,8 +11,14 @@ namespace AudioPlayerHost
         const string AUDIO1 = @"audios/audio1.flac";
         const string AUDIO2 = @"audios/audio2.flac";
 
+
         static void Main(string[] args)
         {
+            HttpServer server = new();
+
+            server.IncomingHttpRequest += Server_IncomingHttpRequest;
+            server.Start();
+
             string audioFile = AUDIO1;
 
             var outputs = new Dictionary<string, int> {
@@ -62,6 +68,12 @@ namespace AudioPlayerHost
                     }
                 }
             }
+        }
+
+        private static void Server_IncomingHttpRequest(object? sender, IncomingHttpRequestEventArgs e)
+        {
+            Console.WriteLine("!");
+            e.Response.Close();
         }
     }
 }
