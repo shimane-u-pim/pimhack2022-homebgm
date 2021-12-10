@@ -1,6 +1,8 @@
 ﻿using System;
 using NAudio;
 using NAudio.Wave;
+using System.Text.Json;
+using System.Text;
 
 namespace AudioPlayerHost
 {
@@ -11,8 +13,15 @@ namespace AudioPlayerHost
         const string AUDIO1 = @"audios/audio1.flac";
         const string AUDIO2 = @"audios/audio2.flac";
 
+        private static AudioPlayer? player = null;
+
         static void Main(string[] args)
         {
+            HttpServer server = new();
+
+            server.IncomingHttpRequest += Server_IncomingHttpRequest;
+            server.Start();
+
             string audioFile = AUDIO1;
 
             var outputs = new Dictionary<string, int> {
@@ -20,48 +29,63 @@ namespace AudioPlayerHost
                 { "Sub", 1 },
             };
 
-            using (AudioPlayer ap = new(outputs))
+            player = new(outputs);
+
+            LoadFile(audioFile);
+
+            for (; ; )
             {
-            LoadAudio:
-                ap.LoadFile(audioFile, AUDIO_TIMING);
-
-                ap.Play();
-
-                for (; ; )
+                char kchar = Console.ReadKey().KeyChar;
+                switch (kchar)
                 {
-                    char kchar = Console.ReadKey().KeyChar;
-
-                    switch (kchar)
-                    {
-                        case 'q':
-                            break;
-
-                        case '1':
-                            ap.SetVolume(outputs.Keys.ToArray()[0], 0);
-                            break;
-
-                        case '2':
-                            ap.SetVolume(outputs.Keys.ToArray()[0], 1);
-                            break;
-
-                        case '3':
-                            ap.SetVolume(outputs.Keys.ToArray()[1], 0);
-                            break;
-
-                        case '4':
-                            ap.SetVolume(outputs.Keys.ToArray()[1], 1);
-                            break;
-
-                        case 'a':
-                            audioFile = AUDIO1;
-                            goto LoadAudio;
-
-                        case 'b':
-                            audioFile = AUDIO2;
-                            goto LoadAudio;
-                    }
+                    case 'q':
+                        return;
                 }
             }
+        }
+
+        private static void LoadFile(string file)
+        {
+            if (player == null) return;
+            player!.LoadFile(file, AUDIO_TIMING);
+            player!.Play();
+        }
+
+        private static async void Server_IncomingHttpRequest(object? sender, IncomingHttpRequestEventArgs e)
+        {
+            if (player == null) return;
+
+            if (e.Request.HttpMethod != "POST") goto Close;
+
+            if (!e.Request.HasEntityBody) goto Close;
+
+            if (e.Request.ContentEncoding != Encoding.UTF8) goto Close;
+            ControlApi? control = await JsonSerializer.DeserializeAsync<ControlApi>(e.Request.InputStream);
+
+            if (control == null) goto Close;
+
+            if (control.type == null) goto Close;
+
+            switch (control.type)
+            {
+                case "file":
+                    if (control.file == null || !File.Exists(control.file)) goto Close;
+                    LoadFile(control.file);
+                    break;
+
+                case "vol":
+                    if (control.target == null || control.volume < 0 || control.volume > 1)
+                        goto Close;
+                    player.SetVolume(control.target, control.volume);
+                    break;
+
+                default:
+                    goto Close;
+            }
+
+            Console.WriteLine($"!{control.type}");
+        Close:
+            e.Response.Close();
         }
     }
 }

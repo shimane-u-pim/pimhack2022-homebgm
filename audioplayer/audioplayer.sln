@@ -1,22 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "audioplayer", "audioplayer.csproj", "{7B851AE9-C772-4C76-8E73-4E895930E21E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "audioplayer", "audioplayer.csproj", "{7B851AE9-C772-4C76-8E73-4E895930E21E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Debug|x64.ActiveCfg = Debug|x64
+		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Debug|x64.Build.0 = Debug|x64
 		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Release|x64.ActiveCfg = Release|x64
+		{7B851AE9-C772-4C76-8E73-4E895930E21E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {374415EC-400F-45B8-B7D5-8E476078B935}
 	EndGlobalSection
 EndGlobal
