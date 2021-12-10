@@ -10,9 +10,6 @@ namespace AudioPlayerHost
     {
         const double AUDIO_TIMING = 45;
 
-        const string AUDIO1 = @"audios/audio1.flac";
-        const string AUDIO2 = @"audios/audio2.flac";
-
         private static AudioPlayer? player = null;
 
         static void Main(string[] args)
@@ -22,16 +19,12 @@ namespace AudioPlayerHost
             server.IncomingHttpRequest += Server_IncomingHttpRequest;
             server.Start();
 
-            string audioFile = AUDIO1;
-
             var outputs = new Dictionary<string, int> {
                 { "Main", 0 },
                 { "Sub", 1 },
             };
 
             player = new(outputs);
-
-            LoadFile(audioFile);
 
             for (; ; )
             {
