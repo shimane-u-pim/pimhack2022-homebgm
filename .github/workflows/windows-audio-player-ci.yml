@@ -21,4 +21,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore audioplayer/audioplayer.csproj
     - name: Build
-      run: dotnet build audioplayer/audioplayer.csproj --no-restore
+      run: dotnet build audioplayer/audioplayer.csproj --no-restore /warnaserror
