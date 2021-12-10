@@ -13,7 +13,7 @@ namespace AudioPlayerHost
         const string AUDIO1 = @"audios/audio1.flac";
         const string AUDIO2 = @"audios/audio2.flac";
 
-        private static AudioPlayer player;
+        private static AudioPlayer? player = null;
 
         static void Main(string[] args)
         {
@@ -45,13 +45,16 @@ namespace AudioPlayerHost
         }
 
         private static void LoadFile(string file)
-        { 
-            player.LoadFile(file, AUDIO_TIMING);
-            player.Play();
+        {
+            if (player == null) return;
+            player!.LoadFile(file, AUDIO_TIMING);
+            player!.Play();
         }
 
         private static async void Server_IncomingHttpRequest(object? sender, IncomingHttpRequestEventArgs e)
         {
+            if (player == null) return;
+
             if (e.Request.HttpMethod != "POST") goto Close;
 
             if (!e.Request.HasEntityBody) goto Close;

@@ -30,10 +30,10 @@ namespace AudioPlayerHost
             listener.Close();
         }
 
-        public event EventHandler<IncomingHttpRequestEventArgs> IncomingHttpRequest;
+        public event EventHandler<IncomingHttpRequestEventArgs>? IncomingHttpRequest;
 
         private void StartWait()
-        { 
+        {
             listener.BeginGetContext(new AsyncCallback(ListenerCallback), listener);
         }
 
@@ -44,7 +44,8 @@ namespace AudioPlayerHost
             HttpListenerContext context = listener.EndGetContext(result);
             StartWait();
 
-            IncomingHttpRequest(this, new(context.Request, context.Response));
+            if (IncomingHttpRequest != null)
+                IncomingHttpRequest(this, new(context.Request, context.Response));
         }
     }
 
