@@ -2,9 +2,9 @@ name: windows-audio-player CI
 
 on:
   push:
-    branches: [ master, windows-audio-player ]
+    branches: [ master, windows-audio-player/master ]
   pull_request:
-    branches: [ master, windows-audio-player ]
+    branches: [ master, windows-audio-player/master ]
   workflow_dispatch:
 
 jobs:
@@ -21,4 +21,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore audioplayer/audioplayer.csproj
     - name: Build
-      run: dotnet build audioplayer/audioplayer.csproj --no-restore
+      run: dotnet build audioplayer/audioplayer.csproj --no-restore /warnaserror
