@@ -21,10 +21,16 @@ MOVE_EVAL_MEAN = 6000
 MAX_HOLD_FRAMES = 10
 
 # 減音に入るまでの無動作時間
-DECIDE_LOWER_TIME = 60
+DECIDE_LOWER_TIME = 20
 
 # ミュートに入るまでの無動作時間
-DECIDE_MUTE_TIME = 120
+DECIDE_MUTE_TIME = 30
+
+# 標準時音量
+DEFAULT_VOLUME = 0.125
+
+# 原音時音量
+LOWER_VOLUME = 0.075
 
 AUDIO_DEVICE_ID = 'Main'
 
@@ -60,9 +66,9 @@ def set_vol(mode, sysmode):
         return sysmode
 
     if mode == 'normal':
-        volreq(1)
+        volreq(DEFAULT_VOLUME)
     elif mode == 'lower':
-        volreq(0.5)
+        volreq(LOWER_VOLUME)
     elif mode == 'mute':
         volreq(0)
 
